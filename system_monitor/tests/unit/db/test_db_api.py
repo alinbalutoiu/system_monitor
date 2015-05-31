@@ -73,3 +73,27 @@ class DBApiTestCase(test.System_MonitorTest):
 
 
 
+@mock.patch.object(models, "Agent")
+@mock.patch("sqlalchemy.sql.exists")
+def _test_add_agent(self, mock_exists,
+                    mock_agent_model,
+                    agent_exists=False):
+    mock_session = mock.Mock()
+    mock_session.query.scalar.return_value = agent_exists
+
+    api.add_agent(mock.sentinel.agent_name)
+
+    mock_exists.assert_called_once_with()
+    mock_agent_model.__eq__.assert_called_once_with(mock.sentinel.agent_name)
+
+    if agent_exists:
+        mock_session.add.assert_called_once_with(mock_agent_model.return_value)
+    else:
+        self.assertFalse(mock_session.add.called)
+
+def test_add_new_agent(self):
+    self._test_add_agent()
+
+def test_add_existing_agent(self):
+    self._test_add_agent(agent_exists=True)
+    
