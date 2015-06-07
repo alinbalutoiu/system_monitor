@@ -1,5 +1,6 @@
 import wmi
 
+
 class wmi_net:
     def __init__(self, mode):
         self.mode = mode

@@ -13,10 +13,11 @@ from system_monitor.controller import controller
 from system_monitor.db import api
 from system_monitor import conf
 
+
 class Agent():
     def __init__(self, typeClass, mode):
-        pythoncom.CoInitialize()    # for multi-threading
-        # we take into account the hostname to allow multiple nodes to be 
+        pythoncom.CoInitialize()  # for multi-threading
+        # we take into account the hostname to allow multiple nodes to be
         # connected at the same time
         self.typeClass = typeClass + " " + socket.gethostname()
         if typeClass[:3] == "CPU":
@@ -27,16 +28,17 @@ class Agent():
             self.cls = disk.wmi_dsk(mode)
         elif typeClass[:3] == "NET":
             self.cls = net.wmi_net(mode)
-        else: 
+        else:
             raise Exception('Agent not recognised!')
         self.run_agent()
 
     def run_agent(self):
         ag = SystemMonitorAgentAPI()
-        ag.call(api.add_agent,self.typeClass)
-        while (True) :
-            ag.call(api.add_status,self.typeClass,self.cls.get_data())
+        ag.call(api.add_agent, self.typeClass)
+        while (True):
+            ag.call(api.add_status, self.typeClass, self.cls.get_data())
             time.sleep(conf.update_interval)
+
 
 class SystemMonitorAgentAPI(object):
     def __init__(self):

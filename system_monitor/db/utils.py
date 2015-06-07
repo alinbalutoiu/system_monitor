@@ -10,6 +10,7 @@ engine = create_engine(conf.db_url, echo=True)
 
 SessionClass = sessionmaker(bind=engine, expire_on_commit=False)
 
+
 @contextlib.contextmanager
 def get_temp_session():
     try:
@@ -18,6 +19,7 @@ def get_temp_session():
     finally:
         session.commit()
         session.close()
+
 
 def ensure_session(f):
     @functools.wraps(f)
