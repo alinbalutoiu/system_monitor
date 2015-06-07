@@ -1,5 +1,6 @@
 import wmi
 
+
 class wmi_mem:
     def __init__(self, mode):
         self.mode = mode

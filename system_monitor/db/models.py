@@ -20,11 +20,13 @@ class BaseModel(object):
 
 DeclarativeBase = declarative_base(cls=BaseModel)
 
+
 def ModelJsonEncoder(obj):
     if isinstance(obj, BaseModel):
         return obj._to_dict()
     else:
         return json.dumps(obj)
+
 
 class Agent(DeclarativeBase):
     __tablename__ = 'agents'
@@ -49,7 +51,7 @@ class Status(DeclarativeBase):
 
     def __str__(self):
         return '%(agent)s: %(curr_status)s' % {'agent': self.agent.name,
-                                          'curr_status': self.curr_status}
+                                               'curr_status': self.curr_status}
 
     def __repr__(self):
         return str(self)

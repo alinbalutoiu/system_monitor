@@ -1,7 +1,7 @@
 # system_monitor
 OpenStack Dev Track Project
 
-BETA Version is out (29.05.2015)
+BETA Version is out! (29.05.2015)
 
 Run server.py on the server that you want to create the database
 
