@@ -10,11 +10,14 @@ from system_monitor.db import api
 from system_monitor import conf
 import time
 import pythoncom
+import socket
 
 class Agent():
     def __init__(self, typeClass, mode):
         pythoncom.CoInitialize()    # for multi-threading
-        self.typeClass = typeClass
+        # we take into account the hostname to allow multiple nodes to be 
+        # connected at the same time
+        self.typeClass = typeClass + " " + socket.gethostname()
         if typeClass[:3] == "CPU":
             self.cls = cpu.wmi_cpu(mode)
         elif typeClass[:3] == "RAM":

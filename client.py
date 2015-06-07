@@ -1,5 +1,5 @@
 from system_monitor.agents import agent as ag
-from system_monitor import constants as ct
+from system_monitor import conf
 from sys import platform as _platform
 import time
 import thread
@@ -9,11 +9,11 @@ def Windows_Client():
     # How to initiate an agent:
     # -> use the name of the agent, currently available:
     # CPU, RAM, DISK, NET
+    # For the name please start with RAM, CPU, NET, DISK and add a custom name
+    # after that in order to identify the agent in the database
     # -> and the mode, currently available:
     # use 1 for used CPU or Memory, Disk reads/sec, Network sent bytes
     # use 2 for free CPU or Memory, Disk writes/sec, Network received bytes
-    # For the name please start with RAM, CPU, NET, DISK and add a custom name
-    # after that in order to identify the agent in the database
     thread.start_new_thread(ag.Agent, ("RAM used", 1))
     thread.start_new_thread(ag.Agent, ("CPU used", 1))
     thread.start_new_thread(ag.Agent, ("NET sent bytes", 1))
@@ -25,7 +25,7 @@ def Windows_Client():
         # into the database since the script started
         print 'Sample number: %s' % sample_no
         sample_no = sample_no + 1
-        time.sleep(ct.update_interval)
+        time.sleep(conf.update_interval)
         
 if __name__ == "__main__": # checks to see if the program is being run directly or it's being imported
     # Determine the OS of the node and select the monitor function specific for the OS
