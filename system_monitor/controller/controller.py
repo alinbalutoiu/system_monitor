@@ -1,20 +1,20 @@
 import pika
 import json
 
-from system_monitor import constants
+from system_monitor import conf
 from system_monitor.db import api as db_api
 from system_monitor.db import models
 
 
-class SystemMonitorControllerRPCAPI(object):
+class SystemMonitorControllerAPI(object):
     def __init__(self):
         self._conn = pika.BlockingConnection(
-            pika.ConnectionParameters(host=constants.rpc_url))
+            pika.ConnectionParameters(host=conf.rpc_url))
         self._channel = self._conn.channel()
         self._channel.basic_qos(prefetch_count=1)
-        self._channel.queue_declare(queue='system_monitor.rpc_queue')
+        self._channel.queue_declare(queue='system_monitor._queue')
         self._channel.basic_consume(self._on_request,
-                                    queue='system_monitor.rpc_queue')
+                                    queue='system_monitor._queue')
 
     def _on_request(self, ch, method, props, body):
         req = json.loads(body)
@@ -32,12 +32,6 @@ class SystemMonitorControllerRPCAPI(object):
             response['err_message'] = exc.message
         print 'Sending back response: %s' % response
 
-        ch.basic_publish(exchange='',
-                         routing_key=props.reply_to,
-                         properties=pika.BasicProperties(
-                            correlation_id = props.correlation_id),
-                         body=json.dumps(response,
-                                         default=models.ModelJsonEncoder))
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
     def accept(self):

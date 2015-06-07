@@ -1,3 +1,2 @@
-SQLAlchemy=0.9.8
-
-pika=0.9.14
+SQLAlchemy==0.9.8
+pika==0.9.14
