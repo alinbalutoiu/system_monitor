@@ -18,9 +18,7 @@ class BaseModel(object):
                  for col in self.__table__.columns}
         return _dict
 
-
 DeclarativeBase = declarative_base(cls=BaseModel)
-
 
 def ModelJsonEncoder(obj):
     if isinstance(obj, BaseModel):
@@ -45,7 +43,7 @@ class Status(DeclarativeBase):
 
     curr_status = Column(String(255))
 
-    agent_id = Column(ForeignKey('agents.id'))
+    agent_name = Column(ForeignKey('agents.name'))
 
     agent = relationship("Agent", backref=backref('stats'), order_by='Agent.id')
 

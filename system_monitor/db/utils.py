@@ -4,9 +4,9 @@ import functools
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from system_monitor import constants
+from system_monitor import conf
 
-engine = create_engine(constants.db_url, echo=True)
+engine = create_engine(conf.db_url, echo=True)
 
 SessionClass = sessionmaker(bind=engine, expire_on_commit=False)
 
