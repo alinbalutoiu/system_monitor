@@ -19,7 +19,7 @@ class DBApiTestCase(test.System_MonitorTest):
         mock_session.query.scalar.return_value = agent_exists
 
         api.add_agent(mock.sentinel.agent_name)
-
+       
         mock_exists.assert_called_once_with()
         mock_agent_model.__eq__.assert_called_once_with(mock.sentinel.agent_name)
 

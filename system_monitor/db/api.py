@@ -1,10 +1,6 @@
-from system_monitor import conf
 from system_monitor.db import models
 from system_monitor.db import utils
 from sqlalchemy.sql import exists
-
-from sqlalchemy.orm import subqueryload, joinedload
-
 
 def create_tables():
     models.DeclarativeBase.metadata.create_all(utils.engine)

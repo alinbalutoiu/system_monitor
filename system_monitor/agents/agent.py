@@ -1,16 +1,17 @@
 import json
 import pika
 import uuid
+import time
+import pythoncom
+import socket
 import cpu_wmi as cpu
 import dsk_wmi as disk
 import mem_wmi as mem
 import net_wmi as net
+
 from system_monitor.controller import controller
 from system_monitor.db import api
 from system_monitor import conf
-import time
-import pythoncom
-import socket
 
 class Agent():
     def __init__(self, typeClass, mode):

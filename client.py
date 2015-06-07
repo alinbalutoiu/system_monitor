@@ -1,8 +1,9 @@
+import time
+import thread
+
 from system_monitor.agents import agent as ag
 from system_monitor import conf
 from sys import platform as _platform
-import time
-import thread
 
 # Get all the details about the system using WMI
 def Windows_Client():
