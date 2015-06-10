@@ -1,3 +1,5 @@
 from system_monitor.controller import controller
 
-controller.SystemMonitorControllerAPI().accept()
+
+if __name__ == "__main__":
+    controller.SystemMonitorControllerAPI().accept()
