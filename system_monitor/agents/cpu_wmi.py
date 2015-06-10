@@ -1,12 +1,7 @@
-import wmi
+from agent_model import Agent_Model
 
 
-class wmi_cpu():
-    def __init__(self, mode):
-        self.mode = mode
-        self.conn = wmi.WMI()
-        self.update_status()
-        self.NrCores = self.cpu.NumberOfCores
+class wmi_cpu(Agent_Model):
 
     def getUsedCPU(self):
         self.update_status()
@@ -21,8 +16,6 @@ class wmi_cpu():
     def update_status(self):
         self.cpu = self.conn.win32_Processor()[0]
 
-    def get_data(self):
-        if self.mode == 1:
-            return self.getUsedCPU()
-        elif self.mode == 2:
-            return self.getFreeCPU()
+    def setData(self):
+        self.data['Free CPU'] = self.getFreeCPU()
+        self.data['Used CPU'] = self.getUsedCPU()
