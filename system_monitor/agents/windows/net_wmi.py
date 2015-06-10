@@ -1,11 +1,7 @@
-import wmi
+from system_monitor.agents.agent_model import Agent_Model
 
 
-class wmi_net:
-    def __init__(self, mode):
-        self.mode = mode
-        self.conn = wmi.WMI()
-
+class wmi_net(Agent_Model):
     # computing the sum of total bytes sent by all network adapters
     def getBytesSentPerSec(self):
         self.update_status()
@@ -22,11 +18,12 @@ class wmi_net:
         return bytesReceived
 
     def update_status(self):
-        self.netw = self.conn.query("SELECT BytesSentPersec, BytesReceivedPersec, CurrentBandwidth \
+        self.netw = self.conn.query("SELECT BytesSentPersec, BytesReceivedPersec \
                                      FROM Win32_PerfRawData_Tcpip_NetworkInterface")
 
-    def get_data(self):
-        if self.mode == 1:
-            return self.getBytesSentPerSec()
-        elif self.mode == 2:
-            return self.getBytesReceivedPerSec()
+    def setData(self):
+        self.data['NetBytesSentPersec'] = self.getBytesSentPerSec()
+        self.data['NetBytesReceivedPersec'] = self.getBytesReceivedPerSec()
+
+    def setAgentName(self):
+        self.agent_name = 'Net Agent ' + self.hostname

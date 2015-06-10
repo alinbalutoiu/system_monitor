@@ -25,9 +25,6 @@ class SystemMonitorControllerAPI(object):
         try:
             db_api.add_agent(agent_name)
             db_api.add_status(agent_name, *args, **kwargs)
-            for i in args:
-                print i
-            print 'Finish'
         except Exception as exc:
             pass
 

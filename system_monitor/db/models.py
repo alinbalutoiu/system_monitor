@@ -1,6 +1,7 @@
 from sqlalchemy import ForeignKey, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
+from sqlalchemy.types import PickleType
 
 from system_monitor.db import utils
 
@@ -17,6 +18,7 @@ class BaseModel(object):
         _dict = {col.name: getattr(self, col.name)
                  for col in self.__table__.columns}
         return _dict
+
 
 DeclarativeBase = declarative_base(cls=BaseModel)
 
@@ -43,15 +45,17 @@ class Agent(DeclarativeBase):
 class Status(DeclarativeBase):
     __tablename__ = 'stats'
 
-    curr_status = Column(String(255))
+    status = Column(PickleType)
 
     agent_name = Column(ForeignKey('agents.name'))
 
-    agent = relationship("Agent", backref=backref('stats'), order_by='Agent.id')
+    agent = relationship("Agent", 
+                         backref=backref('stats'), 
+                         order_by='Agent.name')
 
     def __str__(self):
-        return '%(agent)s: %(curr_status)s' % {'agent': self.agent.name,
-                                               'curr_status': self.curr_status}
+        return '%(agent)s: %(status)s' % {'agent': self.agent.name,
+                                               'status': self.status}
 
     def __repr__(self):
         return str(self)

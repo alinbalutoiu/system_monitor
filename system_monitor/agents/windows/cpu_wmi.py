@@ -1,8 +1,7 @@
-from agent_model import Agent_Model
+from system_monitor.agents.agent_model import Agent_Model
 
 
 class wmi_cpu(Agent_Model):
-
     def getUsedCPU(self):
         self.update_status()
         return self.cpu.LoadPercentage
@@ -19,3 +18,6 @@ class wmi_cpu(Agent_Model):
     def setData(self):
         self.data['Free CPU'] = self.getFreeCPU()
         self.data['Used CPU'] = self.getUsedCPU()
+
+    def setAgentName(self):
+        self.agent_name = 'CPU Agent ' + self.hostname

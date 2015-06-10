@@ -1,10 +1,9 @@
-# system_monitor
-OpenStack Dev Track Project
+## Systen Monitor
 
-BETA Version is out! (29.05.2015)
+**OpenStack Dev Track Project**
+
+## How to use
 
 Run server.py on the server that you want to create the database
 
-Run client.py on the nodes that you want to monitor
-
-Beta version Updated! (7.06.2015)
+Run the agents on the nodes that you want to monitor

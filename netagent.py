@@ -1,4 +1,4 @@
-import system_monitor.agents.windows.cpu_wmi as cpu
+import system_monitor.agents.windows.net_wmi as net
 from sys import platform as _platform
 
 
@@ -8,5 +8,5 @@ if __name__ == "__main__":
     elif _platform == "darwin":
         print 'MacOS not suppoert yet'
     elif _platform == "win32":
-        agent = cpu.wmi_cpu()
+        agent = net.wmi_net()
         agent.start_agent()
